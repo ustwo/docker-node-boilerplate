@@ -1,0 +1,42 @@
+{
+  "name": "dbp",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node app/server",
+    "debug": "DEBUG=express:* node app/server",
+    "test": "mocha app/client",
+    "compile": "browserify -t reactify app/src/dbp.jsx -o app/client/dbp.js && echo \"Compiled\""
+  },
+  "author": "ustwo",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^8.1.0",
+    "flux": "^2.0.1",
+    "ramda": "^0.8.0",
+    "react": "^0.12.2",
+    "reactify": "^0.17.1",
+
+    "express": "4.11.0",
+    "multer": "*",
+    "cookie-session": "*",
+    "morgan": "*",
+    "csurf": "*",
+    "serve-static": "*",
+    "stylus": "^0.49.3",
+    "nib": "~1.0.4",
+    "passport": "^0.2.1",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.10",
+    "gulp-concat": "*",
+    "gulp-jshint": "*",
+    "gulp-stylus": "^2.0.0",
+    "gulp-uglify": "*",
+    "chai": "~1.10.0",
+    "mocha": "~2.1.0"
+  }
+}

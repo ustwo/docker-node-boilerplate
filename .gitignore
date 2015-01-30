@@ -1,0 +1,9 @@
+.vagrant
+.tmp
+tmp
+node_modules
+npm-debug.log
+logs/*
+app/client/*
+!app/client/.gitignore
+app/npm-debug.log
