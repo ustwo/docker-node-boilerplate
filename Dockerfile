@@ -8,6 +8,7 @@ RUN apt-get update -qyy \
 
 RUN mkdir -p /home/dbp
 WORKDIR /home/dbp
+ENV TERM=xterm-256color
 
 COPY package.json /home/dbp/package.json
 COPY app /home/dbp/app

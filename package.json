@@ -5,13 +5,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "prestart": "npm install",
     "start": "node app/server",
     "debug": "DEBUG=express:* node app/server",
     "test": "mocha app/client",
     "compile": "browserify -t reactify app/src/dbp.jsx -o app/client/dbp.js && echo \"Compiled\""
   },
   "author": "ustwo",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "browserify": "^8.1.0",
     "flux": "^2.0.1",

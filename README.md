@@ -1,7 +1,23 @@
 # Docker boilerplate
 
 This is a work in progress boilerplate which makes it easy to get started with
-a web app running in a Node based Docker container.
+a simple web app prototype, running in a Node based Docker container.
+
+The intention behind this is to get you started with Docker with the minimum
+amount of code to understand and hassle to get set up, so you should add and
+remove things as your project progresses, but definitely before you go live.
+
+Also, since you really shouldn't have your database in the same container, as
+soon as you need that you'll have to dig into [managing and connecting multiple instances](https://docs.docker.com/userguide/dockerlinks/), likely also including a [Data Volume Container](https://docs.docker.com/userguide/dockervolumes/).
+
+So what you're going to get is a great way of setting up and sharing development
+environments between different computers / developers / host operating systems,
+but not a setup which is ready to go live on the push of a button.
+
+## TODO
+
+* Add Ruby?
+* More on database setup?
 
 ## Dependencies
 
@@ -45,7 +61,7 @@ run `make build` to get the image built locally.
 To start the mock service you have to pull a recent image from the registry (or
 build your own, see above) and initialise a new container.
 
-    # WARNING: Be sure you are authenticated to the docker registry (`docker login`)
+	$ docker login
     $ ./bin/dbp pull
     $ ./bin/dbp init
 
