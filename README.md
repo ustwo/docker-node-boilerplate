@@ -16,6 +16,7 @@ but not a setup which is ready to go live on the push of a button.
 
 ## TODO
 
+* Grunt / Gulp + LiveReload? See: https://github.com/newaeonweb/frontendboilerplate
 * Add Ruby?
 * More on database setup?
 
