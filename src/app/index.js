@@ -7,5 +7,5 @@ React.initializeTouchEvents(true);
 
 React.render(
   <App />,
-  document.body
+  document.getElementById('react-content')
 );

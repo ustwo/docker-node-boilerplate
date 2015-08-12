@@ -2,8 +2,11 @@
 
 @import '../../../node_modules/normalize-libsass/normalize';
 
-.docker {
+body {
   text-align: center;
   font-size: 3em;
+}
+
+.docker {
   color: #CCC;
 }

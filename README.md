@@ -1,14 +1,18 @@
 # Docker Node boilerplate
 
-Development only
+This is a development only Docker example repository to demonstrate how to have a simple React + Sass + Express app working with file system watching inside Docker and proxied BrowserSync.
 
-TODO
+What's interesting to look at is:
+  * Dockerfile: how the project folders and NPM dependencies are set up
+  * Makefile: shortcuts for the sometimes lengthy Docker and Docker Machine commands
+  * Gulpfile: how to proxy BrowserSync and trigger it through Gulp instead of using its own watcher
+  * Package.json: the `scripts` section wrapping various commands
 
 ## Setup
 
-The project is wrapped into a Docker container so the only dependencies are Docker related.
+The project is designed to be run inside a Docker container so the only dependencies are Docker related.
 
-You should have [Docker Machine](https://docs.docker.com/machine/#installation), [Docker Engine](https://docs.docker.com/installation/binaries/) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed. The easiest way to do that is by installing [Kitematic](https://kitematic.com/).
+You should have [Docker Machine](https://docs.docker.com/machine/#installation), [Docker (Engine)](https://docs.docker.com/installation/binaries/) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed. The easiest way to have all these set up is by installing [Kitematic](https://kitematic.com/).
 
   * First, create a development Docker host (unless already have one, in that case put the name as `vm` variable in `Makefile`)
 
@@ -46,7 +50,7 @@ You should have [Docker Machine](https://docs.docker.com/machine/#installation),
 
 ## Release to Docker Hub
 
-1. Increment version in `Makefile`
-2. Build fresh Docker image – `make build`
-3. Push image to Docker Hub – `make push`
+  1. Increment version in `Makefile`
+  2. Build fresh Docker image – `make build`
+  3. Push image to Docker Hub – `make push`
 
