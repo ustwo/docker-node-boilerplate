@@ -1,21 +1,21 @@
-FROM node:0.11
+FROM node:0.12
+
 MAINTAINER Daniel Demmel <dain@ustwo.com>
 
-RUN apt-get update -qyy \
-  && apt-get install -qyy \
-    vim \
-  && rm -rf /var/lib/apt/lists/*
+WORKDIR /usr/local/src
 
-RUN mkdir -p /home/dbp
-WORKDIR /home/dbp
 ENV TERM=xterm-256color
+ENV NODE_ENV=production
 
-COPY package.json /home/dbp/package.json
-COPY app /home/dbp/app
-RUN npm install && npm run-script compile
+COPY package.json /usr/local/src/package.json
+RUN npm install
 
-# Intended volumes to mount
-# VOLUME /home/dbp/package.json
-# VOLUME /home/dbp/app
+COPY gulpfile.js /usr/local/src/gulpfile.js
+COPY src /usr/local/src/src
+RUN npm run compile
+
+VOLUME /usr/local/src/logs
+
 EXPOSE 8888
-CMD [ "npm", "start" ]
+
+CMD ["node", "/usr/local/src/node_modules/babel/lib/_babel-node", "src/server"]

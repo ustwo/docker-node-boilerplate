@@ -1,9 +1,3 @@
-.vagrant
-.tmp
-tmp
-node_modules
+.DS_Store
+.sass-cache
 npm-debug.log
-logs/*
-app/client/*
-!app/client/.gitignore
-app/npm-debug.log

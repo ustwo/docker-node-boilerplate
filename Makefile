@@ -1,32 +1,73 @@
-tag ?= latest
-image_name ?= ustwo/docker-boilerplate
-container ?= dbp
+tag ?= 0.0.1
+image_name ?= ustwo/docker-node-boilerplate
+container ?= dnb
+vm ?= dev
 image = $(image_name):$(tag)
-images = `docker images -f 'dangling=true'`
+mount = -v $$(pwd)/src:/usr/local/src/src -v $$(pwd)/package.json:/usr/local/src/package.json -v $$(pwd)/gulpfile.js:/usr/local/src/gulpfile.js
+.PHONY : browsersync restart rm watch
 
+# Build container
 build :
 	docker build -t $(image) .
 
+# Run container with watcher and browsersync
+browsersync :
+	docker run -d -p 8888:8888 -p 3001:3001 --name $(container) $(mount) $(image) npm run browsersync
+
+# Create Docker host
+create :
+	docker-machine create --driver virtualbox --virtualbox-memory "2048" $(vm)
+
+# Get container host IP
+ip :
+	docker-machine ip $(vm)
+
+# Tail container output
+log :
+	docker logs -f $(container)
+
+# Open app in browser
+open :
+	open http://$$(docker-machine ip $(vm)):8888
+
+# Pull container from hub
+pull :
+	docker pull $(image)
+
+# Push container to hub
 push :
 	docker push $(image)
 
-start :
-	docker start $(container)
+# Restart container
+restart : rm watch
 
-stop :
-	docker stop $(container)
+# Restart container with browsersync
+restartbs : rm browsersync
 
 # Remove container
 rm :
 	docker rm -f $(container)
 
-# Remove orphan images
-rmo :
-	docker rmi $$(docker images -qf 'dangling=true')
+# Run container
+run :
+	docker run -d -p 8888:8888 --name $(container) $(mount) $(image) npm run dev
 
-# Remove tagged image
-rmi :
-	docker rmi $(image)
+# Run container with watcher
+watch :
+	docker run -d -p 8888:8888 --name $(container) $(mount) $(image) npm run watch
 
-# Remove everything
-nuke : rm rmi rmo
+# Open container shell
+ssh :
+	docker exec -it $(container) /bin/bash
+
+# Update packages inside container
+install :
+	docker run -p 8888:8888 --name $(container) $(mount) $(image) npm install
+
+# Update packages inside container
+update :
+	docker exec $(container) npm run update
+
+# Check if there are updates to packages inside container
+updatecheck :
+	docker exec $(container) npm run updatecheck
