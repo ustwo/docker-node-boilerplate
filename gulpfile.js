@@ -169,13 +169,15 @@ var tasks = {
   serve: function(cb) {
     var started = false;
 
-    // FIXME: Nodemon enters an infinte loop on file changes, not sure yet why...
+    // FIXME: Nodemon enters an infinite loop on file changes, not sure yet why...
+    // See issue: https://github.com/remy/nodemon/issues/609
     return nodemon({
       // dump: true,
       // delay: 10000,
       verbose: true,
       script: 'src/server/index.js',
-      watch: ['src/server', 'src/templates'],
+      // watch: ['src/server', 'src/templates'],
+      watch: ['src/assets'],
       execMap: {
         js: 'babel-node'
       },

@@ -1,12 +1,14 @@
 # Docker Node boilerplate
 
-This is a development only Docker example repository to demonstrate how to have a simple React + Sass + Express app working with file system watching inside Docker and proxied BrowserSync.
+This is a development only Docker example repository to demonstrate how to have a simple React + Sass + Express app working with file system watching and BrowserSync proxy inside Docker.
 
 What's interesting to look at is:
   * Dockerfile: how the project folders and NPM dependencies are set up
   * Makefile: shortcuts for the sometimes lengthy Docker and Docker Machine commands
   * Gulpfile: how to proxy BrowserSync and trigger it through Gulp instead of using its own watcher
   * Package.json: the `scripts` section wrapping various commands
+
+You can find the prebuilt image on Docker Hub at: https://hub.docker.com/r/ustwo/docker-node-boilerplate/
 
 ## Setup
 
