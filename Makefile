@@ -1,73 +1,73 @@
-tag ?= 0.0.1
+tag ?= 0.0.2
 image_name ?= ustwo/docker-node-boilerplate
 container ?= dnb
 vm ?= dev
 image = $(image_name):$(tag)
 mount = -v $$(pwd)/src:/usr/local/src/src -v $$(pwd)/package.json:/usr/local/src/package.json -v $$(pwd)/gulpfile.js:/usr/local/src/gulpfile.js
-.PHONY : browsersync restart rm watch
+.PHONY: browsersync restart rm watch
 
 # Build container
-build :
+build:
 	docker build -t $(image) .
 
 # Run container with watcher and browsersync
-browsersync :
-	docker run -d -p 8888:8888 -p 3001:3001 --name $(container) $(mount) $(image) npm run browsersync
+browsersync:
+	docker run -d -p 8877:8877 -p 3001:3001 --name $(container) $(mount) $(image) npm run browsersync
 
 # Create Docker host
-create :
+create:
 	docker-machine create --driver virtualbox --virtualbox-memory "2048" $(vm)
 
 # Get container host IP
-ip :
+ip:
 	docker-machine ip $(vm)
 
 # Tail container output
-log :
+log:
 	docker logs -f $(container)
 
 # Open app in browser
-open :
-	open http://$$(docker-machine ip $(vm)):8888
+open:
+	open http://$$(docker-machine ip $(vm)):8877
 
 # Pull container from hub
-pull :
+pull:
 	docker pull $(image)
 
 # Push container to hub
-push :
+push:
 	docker push $(image)
 
 # Restart container
-restart : rm watch
+restart: rm watch
 
 # Restart container with browsersync
-restartbs : rm browsersync
+restartbs: rm browsersync
 
 # Remove container
-rm :
+rm:
 	docker rm -f $(container)
 
 # Run container
-run :
-	docker run -d -p 8888:8888 --name $(container) $(mount) $(image) npm run dev
+run:
+	docker run -d -p 8877:8877 --name $(container) $(mount) $(image) npm run dev
 
 # Run container with watcher
-watch :
-	docker run -d -p 8888:8888 --name $(container) $(mount) $(image) npm run watch
+watch:
+	docker run -d -p 8877:8877 --name $(container) $(mount) $(image) npm run watch
 
 # Open container shell
-ssh :
+ssh:
 	docker exec -it $(container) /bin/bash
 
 # Update packages inside container
-install :
-	docker run -p 8888:8888 --name $(container) $(mount) $(image) npm install
+install:
+	docker run -p 8877:8877 --name $(container) $(mount) $(image) npm install
 
 # Update packages inside container
-update :
+update:
 	docker exec $(container) npm run update
 
 # Check if there are updates to packages inside container
-updatecheck :
+updatecheck:
 	docker exec $(container) npm run updatecheck

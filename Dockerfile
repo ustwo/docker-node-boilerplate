@@ -1,4 +1,4 @@
-FROM node:0.12
+FROM node:5
 
 MAINTAINER Daniel Demmel <dain@ustwo.com>
 
@@ -11,11 +11,12 @@ COPY package.json /usr/local/src/package.json
 RUN npm install
 
 COPY gulpfile.js /usr/local/src/gulpfile.js
+COPY .babelrc /usr/local/src/.babelrc
 COPY src /usr/local/src/src
 RUN npm run compile
 
 VOLUME /usr/local/src/logs
 
-EXPOSE 8888
+EXPOSE 8877
 
-CMD ["node", "/usr/local/src/node_modules/babel/lib/_babel-node", "src/server"]
+CMD ["babel-node", "src/server"]

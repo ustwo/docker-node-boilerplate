@@ -11,7 +11,7 @@ import routes from './routes.js';
 let app = express();
 let publicPath = path.join(__dirname, '../../public');
 
-app.set('port', process.env.PORT || 8888);
+app.set('port', process.env.PORT || 8877);
 app.set('host', process.env.VIRTUAL_HOST || ('http://localhost:' + app.get('port') + '/'));
 app.set('x-powered-by', false);
 app.engine('html', cons.handlebars);

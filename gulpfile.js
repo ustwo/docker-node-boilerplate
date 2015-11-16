@@ -12,13 +12,12 @@ var sourcemaps = require('gulp-sourcemaps');
 // sass
 var sass = require('gulp-sass');
 var postcss = require('gulp-postcss');
-var autoprefixer = require('autoprefixer-core');
+var autoprefixer = require('autoprefixer');
 
 // js
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var babelify = require('babelify');
-var reactify = require('reactify');
 var nodemon = require('gulp-nodemon');
 
 // production flag
@@ -106,14 +105,13 @@ var tasks = {
       .pipe(gulp.dest('public/css'));
   },
   // --------------------------
-  // Reactify
+  // Babelify
   // --------------------------
-  reactify: function() {
+  babelify: function() {
     // Create a separate vendor bundler that will only run when starting gulp
     var vendorBundler = browserify({
       debug: !production // Sourcemapping
     })
-    .require('babelify/polyfill')
     .require('react')
 
     var bundler = browserify({
@@ -122,12 +120,8 @@ var tasks = {
       packageCache: {},
       fullPaths: watch
     })
-    .require(require.resolve('./src/app/index.js'), { entry: true })
-    .transform(babelify.configure({
-        optional: ["es7.classProperties"]
-    }))
-    .transform(reactify, {"es6": true})
-    .external('babelify/polyfill')
+    .require(require.resolve('./src/app/app.jsx'), { entry: true })
+    .transform('babelify')
     .external('react')
 
     if (watch) {
@@ -154,7 +148,7 @@ var tasks = {
     if (watch) {
       bundler.on('update', rebundle);
       bundler.on('log', function (msg) {
-        gutil.log('Reactify rebundle:', msg);
+        gutil.log('Babelify rebundle:', msg);
       });
     }
 
@@ -169,23 +163,19 @@ var tasks = {
   serve: function(cb) {
     var started = false;
 
-    // FIXME: Nodemon enters an infinite loop on file changes, not sure yet why...
-    // See issue: https://github.com/remy/nodemon/issues/609
     return nodemon({
-      // dump: true,
-      // delay: 10000,
       verbose: true,
+      legacyWatch: true,
       script: 'src/server/index.js',
-      // watch: ['src/server', 'src/templates'],
-      watch: ['src/assets'],
+      watch: ['src/server', 'src/templates'],
       execMap: {
-        js: 'babel-node'
+          'js': 'babel-node'
       },
       ext: 'js html',
       stdout: false,
       env: {
         'NODE_ENV': 'development',
-        'PORT': syncbrowser ? 8887 : 8888
+        'PORT': syncbrowser ? 8878 : 8877
       }
     }).on('start', function () {
       gutil.log(gutil.colors.bgGreen('Nodemon ' + (started ? 're' : 'first ') + 'start...'));
@@ -193,9 +183,9 @@ var tasks = {
         started = true;
         if (syncbrowser) {
           browserSync.init(null, {
-            port: 8888,
+            port: 8877,
             proxy: {
-              target: 'localhost:8887'
+              target: 'localhost:8878'
             },
             open: false
           });
@@ -225,14 +215,14 @@ gulp.task('reload-sass', ['sass'], function(){
 // --------------------------
 gulp.task('clean', tasks.clean);
 gulp.task('sass', tasks.sass);
-gulp.task('reactify', tasks.reactify);
+gulp.task('babelify', tasks.babelify);
 gulp.task('serve', ['build'], tasks.serve);
 gulp.task('start', ['clean', 'serve']);
 
 // build task
 gulp.task('build', [
   'sass',
-  'reactify'
+  'babelify'
 ]);
 
 
