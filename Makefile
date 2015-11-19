@@ -59,15 +59,3 @@ watch:
 # Open container shell
 ssh:
 	docker exec -it $(container) /bin/bash
-
-# Update packages inside container
-install:
-	docker run -p 8877:8877 --name $(container) $(mount) $(image) npm install
-
-# Update packages inside container
-update:
-	docker exec $(container) npm run update
-
-# Check if there are updates to packages inside container
-updatecheck:
-	docker exec $(container) npm run updatecheck

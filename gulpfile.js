@@ -1,4 +1,5 @@
 'use strict';
+
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var del = require('del');
@@ -71,7 +72,7 @@ var tasks = {
     );
   },
   // --------------------------
-  // SASS (libsass)
+  // CSS compilation (LibSass + Autoprefixer)
   // --------------------------
   sass: function() {
     return gulp.src('src/assets/scss/[^_]*.scss')
@@ -105,14 +106,14 @@ var tasks = {
       .pipe(gulp.dest('public/css'));
   },
   // --------------------------
-  // Babelify
+  // Browserify bundles (Babelify + Watchify)
   // --------------------------
   babelify: function() {
     // Create a separate vendor bundler that will only run when starting gulp
     var vendorBundler = browserify({
       debug: !production // Sourcemapping
     })
-    .require('react')
+    .require('react');
 
     var bundler = browserify({
       debug: !production, // Sourcemapping
@@ -122,7 +123,7 @@ var tasks = {
     })
     .require(require.resolve('./src/app/app.jsx'), { entry: true })
     .transform('babelify')
-    .external('react')
+    .external('react');
 
     if (watch) {
       bundler = watchify(bundler, {poll: true});
@@ -160,6 +161,9 @@ var tasks = {
 
     return rebundle();
   },
+  // --------------------------
+  // Node server (Nodemon + BrowserSync)
+  // --------------------------
   serve: function(cb) {
     var started = false;
 

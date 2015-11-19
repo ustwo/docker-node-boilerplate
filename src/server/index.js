@@ -12,8 +12,7 @@ let app = express();
 let publicPath = path.join(__dirname, '../../public');
 
 app.set('port', process.env.PORT || 8877);
-app.set('host', process.env.VIRTUAL_HOST || ('http://localhost:' + app.get('port') + '/'));
-app.set('x-powered-by', false);
+app.set('host', process.env.VIRTUAL_HOST || `http://localhost:${app.get('port')}/`);
 app.engine('html', cons.handlebars);
 app.set('view engine', 'html');
 app.set('views', path.join(__dirname, '../templates'));
