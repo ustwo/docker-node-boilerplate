@@ -14,17 +14,17 @@ You can find the prebuilt image on Docker Hub at: https://hub.docker.com/r/ustwo
 
 The project is designed to be run inside a Docker container so the only dependencies are Docker related.
 
-You should have [Docker Machine](https://docs.docker.com/machine/#installation), [Docker (Engine)](https://docs.docker.com/installation/binaries/) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed. The easiest way to have all these set up is by installing [Kitematic](https://kitematic.com/).
+You should have [Docker Machine](https://docs.docker.com/machine/#installation), [Docker (Engine)](https://docs.docker.com/installation/binaries/) and [Virtualbox](https://www.virtualbox.org/wiki/Downloads) installed. The easiest way to have all these set up is by installing [Docker Toolbox](https://www.docker.com/docker-toolbox).
 
-  * First, create a development Docker host (unless already have one, in that case put the name as `vm` variable in `Makefile`)
+  * First, create a development Docker host – in case you need something different than Docker Toolbox's `default`, otherwise skip this step
 
   `$ make create`
 
   * Set up Docker environment to VM – needs to be done for every new shell session
 
-  `$ eval "$(docker-machine env dev)"`
+  `$ eval "$(docker-machine env default)"`
 
-  * Build container – you can also do a `pull` instead to download a prebuilt image if you're on a fast connection and have a Docker Hub account
+  * Build container – you can also do a faster `pull` instead to download a prebuilt image if you have a Docker Hub account
 
   `$ make build`
 
@@ -56,3 +56,6 @@ You should have [Docker Machine](https://docs.docker.com/machine/#installation),
   2. Build fresh Docker image – `make build`
   3. Push image to Docker Hub – `make push`
 
+## Maintainers
+
+* [Daniel Demmel](mailto:dain@ustwo.com)

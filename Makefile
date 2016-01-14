@@ -1,7 +1,7 @@
 tag ?= 0.0.2
 image_name ?= ustwo/docker-node-boilerplate
 container ?= dnb
-vm ?= dev
+vm ?= default
 image = $(image_name):$(tag)
 mount = -v $$(pwd)/src:/usr/local/src/src -v $$(pwd)/package.json:/usr/local/src/package.json -v $$(pwd)/gulpfile.js:/usr/local/src/gulpfile.js
 .PHONY: browsersync restart rm watch
