@@ -1,3 +1,5 @@
+⚠️ No longer maintained ⚠️
+
 # Docker Node boilerplate
 
 This is a development only Docker example repository to demonstrate how to have a simple React + Sass + Express app working with file system watching and BrowserSync proxy inside Docker.
